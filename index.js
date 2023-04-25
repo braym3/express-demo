@@ -4,6 +4,16 @@ app.use(express.json()); // use body parser that comes with express - express.js
 
 const cats = []; // saving cats to list - no persistence
 
+// logger
+const logger = (req, res, next)=>{  
+    console.log(`Host: `, req.host);
+    console.log(`Method: `, req.method);
+    console.log(`Path: `, req.path);
+    return next(); // uses next to call next function in the chain - as it doesnt send a response
+};
+app.use(logger); // how you use middleware in the express app - no path (always runs - runs every time you call it)
+
+
 // Read
 app.get(`/getAll`, (req,res)=>{ // get request - path & callback(req, res)
     res.json(cats)
@@ -25,8 +35,14 @@ app.delete(`/remove/:id`, (req, res)=>{ // sets variable as part of path
 })
 
 // Update
-app.patch(`/update/:id`, (req, res)=>{
+app.patch(`/update/:id`, (req, res, next)=>{
     const{id} = req.params;
+
+    // check if id is correct
+    if(id >= cats.length){ // checks if id is out of bounds
+        return next({ msg: `ID out of bounds`, status: 404}) // returns next with object of message & status code
+    }
+
     const{name} = req.query; // get query params
     const catToUpdate = cats[id]; // get cat to update
     catToUpdate.name = name; // set name to updated value
