@@ -1,6 +1,7 @@
 const express = require(`express`);
 const app = express(); // creates an app - don't write anything else above this
 app.use(express.json()); // use body parser that comes with express - express.json is middleware that parses the body to json
+require(`./db`) // import db file
 
 // logger
 const logger = (req, res, next)=>{  
