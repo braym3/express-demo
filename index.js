@@ -1,5 +1,5 @@
 const express = require("express");
-const app = express(); // creates an app
+const app = express(); // creates an app - don't write anything else above this
 app.use(express.json()); // use body parser that comes with express - express.json is middleware that parses the body to json
 
 const cats = []; // saving cats to list - no persistence
@@ -32,7 +32,7 @@ app.delete(`/remove/:id`, (req, res)=>{ // sets variable as part of path
     const{id} = req.params; // destructuring id from params
     const removed = cats.splice(id, 1); // index & num of elements to delete - returns deleted element
     res.json(removed);
-})
+});
 
 // Update
 app.patch(`/update/:id`, (req, res, next)=>{
@@ -40,16 +40,21 @@ app.patch(`/update/:id`, (req, res, next)=>{
 
     // check if id is correct
     if(id >= cats.length){ // checks if id is out of bounds
-        return next({ msg: `ID out of bounds`, status: 404}) // returns next with object of message & status code
+        return next({ msg: `ID out of bounds`, status: 404}); // returns next with object of message & status code
     }
 
     const{name} = req.query; // get query params
     const catToUpdate = cats[id]; // get cat to update
     catToUpdate.name = name; // set name to updated value
     res.json(catToUpdate); // return updated cat
-})
+});
 
+// Error handling middleware
+app.use((err, req, res, next)=>{
+    res.status(err.status).send(err.msg);
+});
 
+// don't write anything below this
 const server = app.listen(
     4494,
     ()=>console.log(`server started on `, server.address().port)); // starts the server on whatever port you give it - callback function tells you its started
