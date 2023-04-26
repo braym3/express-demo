@@ -5,7 +5,7 @@ require(`./db`) // import db file
 
 // logger
 const logger = (req, res, next)=>{  
-    console.log(`Host: `, req.host);
+    console.log(`Host: `, req.hostname);
     console.log(`Method: `, req.method);
     console.log(`Path: `, req.path);
     return next(); // uses next to call next function in the chain - as it doesnt send a response
