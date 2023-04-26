@@ -14,8 +14,6 @@
         "linebreak-style": "off",
         "max-len": "off",
         "no-underscore-dangle": "off",
-        "no-unused-expressions": "off",
-        "no-undef": "off",
         "no-plusplus": "off"
     }
 }

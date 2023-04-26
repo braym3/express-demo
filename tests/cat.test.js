@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-undef */
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 // import plug-in
@@ -40,7 +42,6 @@ describe('API tests', () => {
 
   it('should read all cats', (done) => {
     chai.request(server).get('/cats/getAll') // send get request
-      .send()
       .end((err, res) => {
         chai.expect(err).to.be.null;
         chai.expect(res.body).to.be.an('array'); // check body is an array
@@ -75,7 +76,6 @@ describe('API tests', () => {
 
   it('should delete a cat', (done) => {
     chai.request(server).delete(`/cats/remove/${testCat._id}`) // send delete request
-      .send()
       .end((err, res) => {
         chai.expect(err).to.be.null;
         chai.expect(res.body).to.include(testCat);
