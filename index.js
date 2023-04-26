@@ -26,3 +26,4 @@ const server = app.listen(
     ()=>console.log(`server started on `, server.address().port)); // starts the server on whatever port you give it - callback function tells you its started
 
 
+module.exports = server; // export server
